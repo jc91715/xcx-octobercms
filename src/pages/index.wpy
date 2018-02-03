@@ -1,0 +1,101 @@
+<style lang="less">
+.app{
+    padding-left: 5px;
+    padding-right:5px;
+  }
+  .posts{
+    padding:10px 0 15px 15px;
+     display: flex;
+     flex-direction: column;
+  }
+  .head{
+    font-family: 'SimHei';
+    font-weight: bold;
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  .desc{
+    font-family: 'SimeHei';
+    font-size: 13px;
+    color: gray;
+  }
+  .userinfo {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .userinfo-avatar {
+    width: 80rpx;
+    height: 80rpx;
+    border-radius: 50%;
+  }
+
+  .userinfo-nickname {
+    color: #aaa;
+  }
+
+</style>
+<template>
+<scroll-view scroll-y=true style="height: 600px;" bindscrolltolower="fectchQuery">
+ <view class='app'>
+      <repeat for="{{posts}}" key="index" index="index" item="post">
+         <view class="posts" @tap = "gotodetail({{post.id}})">
+              <text class="head">{{post.title}}</text>
+              <text clss="desc">{{post.excerpt}}</text>
+         </view>   
+      </repeat>
+    </view>
+    <button open-type="contact" size="mini" class="fix-right">联系与交流</button>
+    <!-- <button open-type="share" size="mini" class="fix-right">分享</button> -->
+ <loading hidden="{{hidden}}">
+        加载中...
+    </loading>
+    </scroll-view>
+</template>
+<script>
+  import wepy from 'wepy'
+
+  export default class Index extends wepy.page { 
+    config = {
+      navigationBarTitleText: 'octobercms'
+    }
+    data = {
+      posts: {},
+      hidden:false,
+      page: 1
+    }
+    onLoad () {
+
+      wepy.request('http://www.octobercms-china.org/api/v1/posts?page='+this.page).then( d => {
+        this.hidden = true
+        this.posts = d.data.data
+        this.page = d.data.current_page+1
+        this.$apply()
+      })
+    }
+    methods = {
+      gotodetail(id) {
+        wepy.navigateTo({
+          url: 'post?id=' + id
+        })
+      },
+      fectchQuery(){
+        console.log(2121)
+        this.hidden = false
+        this.$apply()
+        console.log(this.page)
+        wepy.request('http://www.octobercms-china.org/api/v1/posts?page='+this.page).then( d => {
+          this.hidden = true
+          console.log(d.data)
+          if(d.data.data.length){
+            this.posts = this.posts.concat(d.data.data)
+            this.page =  d.data.current_page+1
+          }
+          this.$apply()
+          console.log(this.posts)
+      })
+      }
+    }  
+  }
+</script>
