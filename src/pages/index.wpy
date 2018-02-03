@@ -75,7 +75,7 @@
     }
     onLoad () {
 
-      wepy.request('http://www.octobercms-china.org/api/v1/posts?page='+this.page).then( d => {
+      wepy.request('https://xcx.jc91715.top/api/v1/posts?page='+this.page).then( d => {
         this.hidden = true
         this.posts = d.data.data
         this.page = d.data.current_page+1
