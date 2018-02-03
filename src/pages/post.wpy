@@ -623,8 +623,7 @@ Monokai style - ported by Luigi Maselli - http://grigio.org
     onLoad (params) {
       wepy.request('http://www.octobercms-china.org/api/v1/posts/' + params.id).then(d => {
         this.post = d.data
-        let data = towxml.toJson(this.post.content_html, 'html')
-        // data.theme = 'dark'
+        let data = towxml.toJson(this.post.content, 'markdown')
         this.article = data
         this.hidden = true
         console.log(data)

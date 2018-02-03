@@ -34,15 +34,23 @@
   .userinfo-nickname {
     color: #aaa;
   }
+  .line{
+    border:1px solid #f3f3f3
+  }
+  .slot{
+    height:5px;
+  }
 
 </style>
 <template>
-<scroll-view scroll-y=true style="height: 600px;" bindscrolltolower="fectchQuery">
+<scroll-view scroll-y="true" style="height: 600px;" bindscrolltolower="fectchQuery">
  <view class='app'>
       <repeat for="{{posts}}" key="index" index="index" item="post">
          <view class="posts" @tap = "gotodetail({{post.id}})">
               <text class="head">{{post.title}}</text>
               <text clss="desc">{{post.excerpt}}</text>
+              <text class="slot"></text>
+              <text class="line"></text>
          </view>   
       </repeat>
     </view>
