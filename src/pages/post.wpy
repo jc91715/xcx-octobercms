@@ -621,7 +621,7 @@ Monokai style - ported by Luigi Maselli - http://grigio.org
       hidden:false
     }
     onLoad (params) {
-      wepy.request('https://xcx.jc91715.top/api/v1/posts/' + params.id).then(d => {
+      wepy.request('https://jc91715.top/api/v1/posts/' + params.id).then(d => {
         this.post = d.data
         let data = towxml.toJson(this.post.content, 'markdown')
         this.article = data
